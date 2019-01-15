@@ -1,0 +1,23 @@
+allprojects {
+  buildscript {
+    repositories { 
+      mavenCentral() 
+    }
+  }
+
+  repositories {
+    mavenCentral()
+  }
+
+  apply plugin: 'eclipse'
+}
+
+eclipse.project.name = projectName
+
+project(":webapp") {
+  eclipse.project.name = "${projectName}-webapp"
+}
+
+project(":ngpage") {
+  eclipse.project.name = "${projectName}-ngpage"
+}

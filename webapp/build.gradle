@@ -1,0 +1,29 @@
+buildscript {
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: "war"
+apply plugin: "io.spring.dependency-management"
+apply plugin: "org.springframework.boot"
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+processResources {
+	// Substitute property tokens in resource files
+	expand(project.properties)
+}
+
+bootWar.dependsOn = [':ngpage:build']
+
+bootWar {
+	archiveName "${projectName}.war"
+	from 'src/main/resources/static'
+	from project(':ngpage').file('dist')
+}

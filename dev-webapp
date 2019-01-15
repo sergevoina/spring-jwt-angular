@@ -1,0 +1,5 @@
+#! /bin/sh
+
+./gradlew clean build && java -jar webapp/build/libs/*.war --logging.level.com.sergevoina=DEBUG
+
+
