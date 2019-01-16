@@ -1,0 +1,24 @@
+<div class="container py-3">
+	<div class="row">
+		<div class="mx-auto col-sm-6">
+			<!-- form user info -->
+			<div class="card">
+				<div class="card-header">
+					<h4 class="mb-0">Settings <small><small class="text-muted">{{message}}</small></small></h4>
+				</div>
+				<div class="card-body">
+					<form>
+						<div class="form-group" *ngFor="let prop of settings.properties; let i = index">
+							<label for="input{{i}}">{{prop.name}}</label>
+							<input name="input{{i}}" id="input{{i}}" class="form-control"  aria-describedby="emailHelp" placeholder="Enter something" [(ngModel)]="prop.value">
+							<small class="form-text text-muted">We'll never share your input with anyone else.</small>
+						</div>
+						<button type="button" (click)="add()" class="btn btn-secondary mr-2">+</button>
+						<button type="button" (click)="getSettings()" class="btn btn-secondary mr-2">Reload</button>
+						<button type="button" (click)="save()" class="btn btn-primary">Save</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+	padding-top: 4rem;
+	padding-bottom: 4rem;
+	color: #5a5a5a;
+}
+
+img.logo {
+	width: 90px;
+	height: 28px;
+}

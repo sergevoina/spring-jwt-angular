@@ -25,5 +25,5 @@ bootWar.dependsOn = [':ngpage:build']
 bootWar {
 	archiveName "${projectName}.war"
 	from 'src/main/resources/static'
-	from project(':ngpage').file('dist')
+	from project(':ngpage').file('dist/ngpage')
 }

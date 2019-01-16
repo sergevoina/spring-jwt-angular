@@ -1,7 +1,43 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-const routes: Routes = [];
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
+import { SettingsComponent } from './settings/settings.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+
+const routes: Routes = [
+	{
+		path: 'app/home',
+		component: HomeComponent,
+		pathMatch: 'full'
+	},
+	{
+		path: 'app/profile',
+		component: ProfileComponent,
+		pathMatch: 'full'
+	},
+	{
+		path: 'app/settings',
+		component: SettingsComponent,
+		pathMatch: 'full'
+	},
+	{
+		path: '',
+		redirectTo: '/app/home',
+		pathMatch: 'full'
+	},
+	{
+		path: 'app',
+		redirectTo: '/app/home',
+		pathMatch: 'full'
+	},
+	{
+		path: '**',
+		component: PageNotFoundComponent
+	}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
