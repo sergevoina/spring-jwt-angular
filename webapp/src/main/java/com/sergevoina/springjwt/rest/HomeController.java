@@ -1,5 +1,6 @@
 package com.sergevoina.springjwt.rest;
 
+import java.security.Principal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,13 +19,14 @@ public class HomeController {
 	public HomeController() {
 		data.put("name", "HomeController");
 	}
-	
+
 	@GetMapping
-	public Object get() {
+	public Object get(Principal principal) {
 		data.put("time", new Date());
+		data.put("principal", principal != null ? principal.getName() : "<null>");
 		return data;
 	}
-	
+
 	@PutMapping
 	public Object put(@RequestBody Map<String, Object> data) {
 		this.data = new HashMap<>(data);

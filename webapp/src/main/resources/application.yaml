@@ -1,0 +1,18 @@
+server:
+  port: 8080
+
+logging:
+  level:
+    com.sergevoina: debug
+
+security:
+  oauth:
+    client-id: springjwt-client
+    # bcrypt springjwt-secret
+    client-secret: '\$2a\$04\$iPc3CYUEyuUipAlQH.QJKOyhVEE6zHF/HaDJpzjoU/xkBTaS.gYxC'
+    access-token:
+      validity: 3600  # 1 * 60 * 60 seconds
+    refresh-token:
+      validity: 21600 # 6 * 60 * 60 seconds
+  jwt:
+    signing-key: 'as466gf'

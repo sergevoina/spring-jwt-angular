@@ -1,2 +1,26 @@
 # Spring Boot web application
 
+echo -n 'springjwt-client:springjwt-secret' > openssl base64
+c3ByaW5nand0LWNsaWVudDpzcHJpbmdqd3Qtc2VjcmV0
+
+curl -X POST http://localhost:8080/oauth/token \
+--data 'username=admin&password=admin&grant_type=password' \
+--header 'Authorization: Basic c3ByaW5nand0LWNsaWVudDpzcHJpbmdqd3Qtc2VjcmV0' \
+--header 'Content-Type: application/x-www-form-urlencoded'
+
+{
+  "access_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NDc4OTA1NzgsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiJkODc3YzhiOC0xYmY1LTRmNzktYmUxMS05OTRlYTUwNzc0MDIiLCJjbGllbnRfaWQiOiJzcHJpbmdqd3QtY2xpZW50Iiwic2NvcGUiOlsicmVhZCIsIndyaXRlIiwidHJ1c3QiXX0.fsi4E_WnuIDQxymwe9sCeoKpLv3HUfOsOaVc0pIsuOs",
+  "token_type":"bearer",
+  "refresh_token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbiIsInNjb3BlIjpbInJlYWQiLCJ3cml0ZSIsInRydXN0Il0sImF0aSI6IjU5MDgxYTc2LWM2NzItNDY1Yy04NjFlLTNmNDAwNWYzYjAyMiIsImV4cCI6MTU0NzkwNTYxNiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiIxMjIzZjNjZi04MDgwLTQzMDQtOTMzNy02OTgyN2M2YjRlNWQiLCJjbGllbnRfaWQiOiJkZXZnbGFuLWNsaWVudCJ9.9pq0pN3g8ngS-yrZb5FBO7InwAeF5pri-GclhUgfuHk",
+  "expires_in":3599,
+  "scope":"read write trust",
+  "jti":"59081a76-c672-465c-861e-3f4005f3b022"
+}
+
+curl http://localhost:8080/rest/home?access_token=\
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NDc4OTA1NzgsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiJkODc3YzhiOC0xYmY1LTRmNzktYmUxMS05OTRlYTUwNzc0MDIiLCJjbGllbnRfaWQiOiJzcHJpbmdqd3QtY2xpZW50Iiwic2NvcGUiOlsicmVhZCIsIndyaXRlIiwidHJ1c3QiXX0.fsi4E_WnuIDQxymwe9sCeoKpLv3HUfOsOaVc0pIsuOs
+
+curl http://localhost:8080/rest/home \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NDc4OTA1NzgsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiJkODc3YzhiOC0xYmY1LTRmNzktYmUxMS05OTRlYTUwNzc0MDIiLCJjbGllbnRfaWQiOiJzcHJpbmdqd3QtY2xpZW50Iiwic2NvcGUiOlsicmVhZCIsIndyaXRlIiwidHJ1c3QiXX0.fsi4E_WnuIDQxymwe9sCeoKpLv3HUfOsOaVc0pIsuOs'
+
+{"principal":"admin","name":"HomeController","time":"2019-01-19T08:37:10.525+0000"}

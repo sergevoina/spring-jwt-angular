@@ -13,6 +13,13 @@ targetCompatibility = 1.8
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.security.oauth:spring-security-oauth2:2.3.4.RELEASE'
+	implementation 'org.springframework.security:spring-security-jwt:1.0.9.RELEASE'
+	
+	// https://projectlombok.org
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
 }
 
 processResources {
@@ -24,6 +31,8 @@ bootWar.dependsOn = [':ngpage:build']
 
 bootWar {
 	archiveName "${projectName}.war"
-	from 'src/main/resources/static'
-	from project(':ngpage').file('dist/ngpage')
+	from (project(':ngpage').file('dist/ngpage')) {
+		exclude "index.html", "favicon.ico"
+		into "resources"
+	}
 }
