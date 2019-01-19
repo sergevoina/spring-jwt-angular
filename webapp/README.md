@@ -1,6 +1,6 @@
 # Spring Boot web application
 
-echo -n 'springjwt-client:springjwt-secret' > openssl base64
+echo -n 'springjwt-client:springjwt-secret' | openssl base64
 c3ByaW5nand0LWNsaWVudDpzcHJpbmdqd3Qtc2VjcmV0
 
 curl -X POST http://localhost:8080/oauth/token \
