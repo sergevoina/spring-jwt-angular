@@ -17,10 +17,12 @@ curl -X POST http://localhost:8080/oauth/token \
   "jti":"59081a76-c672-465c-861e-3f4005f3b022"
 }
 
-curl http://localhost:8080/rest/home?access_token=\
+curl http://localhost:8080/rest/profile?access_token=\
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NDc4OTA1NzgsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiJkODc3YzhiOC0xYmY1LTRmNzktYmUxMS05OTRlYTUwNzc0MDIiLCJjbGllbnRfaWQiOiJzcHJpbmdqd3QtY2xpZW50Iiwic2NvcGUiOlsicmVhZCIsIndyaXRlIiwidHJ1c3QiXX0.fsi4E_WnuIDQxymwe9sCeoKpLv3HUfOsOaVc0pIsuOs
 
-curl http://localhost:8080/rest/home \
+curl http://localhost:8080/rest/profile \
 --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NDc4OTA1NzgsInVzZXJfbmFtZSI6ImFkbWluIiwiYXV0aG9yaXRpZXMiOlsiUk9MRV9BRE1JTiJdLCJqdGkiOiJkODc3YzhiOC0xYmY1LTRmNzktYmUxMS05OTRlYTUwNzc0MDIiLCJjbGllbnRfaWQiOiJzcHJpbmdqd3QtY2xpZW50Iiwic2NvcGUiOlsicmVhZCIsIndyaXRlIiwidHJ1c3QiXX0.fsi4E_WnuIDQxymwe9sCeoKpLv3HUfOsOaVc0pIsuOs'
 
 {"principal":"admin","name":"HomeController","time":"2019-01-19T08:37:10.525+0000"}
+
+curl http://localhost:8080/rest/home

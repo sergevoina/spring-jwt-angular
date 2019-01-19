@@ -19,10 +19,15 @@ export class SettingsComponent implements OnInit {
   }
   
   getSettings(): void {
-  	this.settingsService.getSettings().subscribe(settings => {
-  		this.settings = settings; 
+  	this.settingsService.getSettings().subscribe(
+  	  data => {
+  		this.settings = data; 
   		this.message = "";
-  	});
+  	  },
+  	  error => {
+  	  	this.settings = null;
+  	  	//this.errorMessage = "Error";
+  	  });
   }
   
   save(): void {
@@ -40,5 +45,4 @@ export class SettingsComponent implements OnInit {
 		this.settings.properties.push({name:"Change Me", value:""});
     }	
   }
-  
 }

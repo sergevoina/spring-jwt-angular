@@ -8,6 +8,8 @@ import { SettingsComponent } from './settings/settings.component';
 import { LoginComponent } from './login/login.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
+import { AuthGuard } from './auth.guard';
+
 const routes: Routes = [
 	{
 		path: 'app/login',
@@ -21,12 +23,15 @@ const routes: Routes = [
 	{
 		path: 'app/profile',
 		component: ProfileComponent,
-		pathMatch: 'full'
+		pathMatch: 'full',
+		canActivate: [AuthGuard]
 	},
 	{
 		path: 'app/settings',
 		component: SettingsComponent,
-		pathMatch: 'full'
+		pathMatch: 'full',
+		canActivate: [AuthGuard],
+		data: { roles: ['ROLE_ADMIN'] } 
 	},
 	{
 		path: '',

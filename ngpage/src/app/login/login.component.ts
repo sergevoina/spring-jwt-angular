@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { first } from 'rxjs/operators';
 
 import { AuthService } from '../auth.service'
 
@@ -9,20 +11,54 @@ import { AuthService } from '../auth.service'
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  private cred = {username:'admin', password:'admin'};
-  
-  constructor(private authService: AuthService) { }
-
-  ngOnInit() {
+  loginForm: FormGroup;
+  loading = false;
+  submitted = false;
+  returnUrl: string;
+  error = '';
  
-  }
-   
-  login(): void {
-    window.sessionStorage.removeItem('token');
-  	this.authService.login(this.cred).subscribe(data => {
-  	    console.log(data);
-  		window.sessionStorage.setItem('token', JSON.stringify(data));
-  	});
-  }
+  constructor(
+        private formBuilder: FormBuilder,
+        private route: ActivatedRoute,
+        private router: Router,
+        private authService: AuthService
+    ) { 
+        // redirect to home if already logged in
+        if (this.authService.getToken()) { 
+            this.router.navigate(['/']);
+        }
+    }
+
+    ngOnInit() {
+        this.loginForm = this.formBuilder.group({
+            username: ['', Validators.required],
+            password: ['', Validators.required]
+        });
+
+        // get return url from route parameters or default to '/'
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    }
+    // convenience getter for easy access to form fields
+    get f() { return this.loginForm.controls; }
+
+    onSubmit() {
+        this.submitted = true;
+
+        // stop here if form is invalid
+        if (this.loginForm.invalid) {
+            return;
+        }
+
+        this.loading = true;
+        this.authService.login(this.f.username.value, this.f.password.value)
+            .pipe(first())
+            .subscribe(
+                data => {
+                    this.router.navigate([this.returnUrl]);
+                },
+                error => {
+                    this.error = "Login Failed";
+                    this.loading = false;
+                });
+    }
 }
