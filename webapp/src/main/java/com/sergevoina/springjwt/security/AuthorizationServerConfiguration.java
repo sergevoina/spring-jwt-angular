@@ -26,58 +26,84 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
 	/**
-	 * OAuth2 provides 4 different roles.
-	 * 
-	 * <li>Resource Owner: User
-	 * <li>Client: Application
-	 * <li>Resource Server: API
-	 * <li>Authorization Server: API
-	 */
-
-	/**
-	 * OAuth2 Grant Types: following are the 4 different grant types defined by
-	 * OAuth2
-	 * 
-	 * <li>Authorization Code: used with server-side Applications
-	 * 
-	 * <li>Implicit: used with Mobile Apps or Web Applications (applications
-	 * that run on the user's device)
-	 * 
-	 * <li>Resource Owner Password Credentials: used with trusted Applications,
-	 * such as those owned by the service itself
-	 * 
-	 * <li>Client Credentials: used with Applications API access
-	 * 
+	 * <p>
+	 * The Password grant type is used by first-party clients to exchange a
+	 * user's credentials for an access token.
+	 * <p>
+	 * Since this involves the client asking the user for their password, it
+	 * should not be used by third party clients. In this flow, the user's
+	 * username and password are exchanged directly for an access token.
 	 */
 	static final String GRANT_TYPE_PASSWORD = "password";
+
+	/**
+	 * <p>
+	 * The Authorization Code grant type is used by confidential and public
+	 * clients to exchange an authorization code for an access token.
+	 * <p>
+	 * After the user returns to the client via the redirect URL, the
+	 * application will get the authorization code from the URL and use it to
+	 * request an access token.
+	 */
 	static final String GRANT_TYPE_AUTHORIZATION_CODE = "authorization_code";
+
+	/**
+	 * <p>
+	 * The Refresh Token grant type is used by clients to exchange a refresh
+	 * token for an access token when the access token has expired.
+	 * <p>
+	 * This allows clients to continue to have a valid access token without
+	 * further interaction with the user.
+	 */
 	static final String GRANT_TYPE_REFRESH_TOKEN = "refresh_token";
+
+	/**
+	 * <p>
+	 * The Implicit grant type is a simplified flow that can be used by public
+	 * clients, where the access token is returned immediately without an extra
+	 * authorization code exchange step.
+	 * <p>
+	 * It is generally not recommended to use the implicit flow (and some
+	 * servers prohibit this flow entirely). In the time since the spec was
+	 * originally written, the industry best practice has changed to recommend
+	 * that public clients should use the authorization code flow with the PKCE
+	 * extension instead.
+	 * <p>
+	 * The OAuth 2.0 Security Best Current Practice document recommends against
+	 * using the Implicit flow entirely, and OAuth 2.0 for Browser-Based Apps
+	 * describes the technique of using the authorization code flow with PKCE.
+	 */
 	static final String GRANT_TYPE_IMPLICIT = "implicit";
 
+	/**
+	 * Reading the full information about a single resource.
+	 */
 	static final String SCOPE_READ = "read";
+	/**
+	 * Modifying the resource in any way e.g. creating, editing, or deleting.
+	 */
 	static final String SCOPE_WRITE = "write";
-	static final String SCOPE_TRUST = "trust";
 
 	@Value("${security.oauth.client-id}")
-	private String CLIEN_ID;
+	private String clientId;
 	@Value("${security.oauth.client-secret}")
-	private String CLIENT_SECRET;
+	private String clientSecret;
 
 	@Value("${security.oauth.access-token.validity}")
-	private int ACCESS_TOKEN_VALIDITY_SECONDS;
+	private int accessTokenValidity;
 	@Value("${security.oauth.refresh-token.validity}")
-	private int FREFRESH_TOKEN_VALIDITY_SECONDS;
+	private int refreshTokenValidity;
 
 	@Value("${security.jwt.signing-key}")
-	private String JWT_ACCESS_TOKEN_SIGNING_KEY;
-	
+	private String jwtAccessTokenSigningKey;
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
 		JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-		converter.setSigningKey(JWT_ACCESS_TOKEN_SIGNING_KEY);
+		converter.setSigningKey(jwtAccessTokenSigningKey);
 		return converter;
 	}
 
@@ -103,12 +129,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	@Override
 	public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
 		// @formatter:off
-		configurer.inMemory().withClient(CLIEN_ID)
-			.secret(CLIENT_SECRET)
-			.authorizedGrantTypes(GRANT_TYPE_PASSWORD, GRANT_TYPE_AUTHORIZATION_CODE, GRANT_TYPE_REFRESH_TOKEN, GRANT_TYPE_IMPLICIT)
-			.scopes(SCOPE_READ, SCOPE_WRITE, SCOPE_TRUST)
-			.accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
-			.refreshTokenValiditySeconds(FREFRESH_TOKEN_VALIDITY_SECONDS);
+		configurer.inMemory().withClient(clientId)
+			.secret(clientSecret)
+			.authorizedGrantTypes(GRANT_TYPE_PASSWORD, GRANT_TYPE_REFRESH_TOKEN)
+			.scopes(SCOPE_READ, SCOPE_WRITE)
+			.accessTokenValiditySeconds(accessTokenValidity)
+			.refreshTokenValiditySeconds(refreshTokenValidity);
 		// @formatter:on
 	}
 
