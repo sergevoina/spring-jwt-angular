@@ -9,8 +9,8 @@ import { SettingsService } from '../settings.service'
 })
 export class SettingsComponent implements OnInit {
 
-  private settings: any;
-  private message: string;
+  settings: any;
+  message: string;
   
   constructor(private settingsService: SettingsService) { }
 

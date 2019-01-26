@@ -9,7 +9,7 @@ import { HomeService } from '../home.service'
 })
 export class HomeComponent implements OnInit {
 
-  private data: any;
+  data: any;
   
   constructor(private homeService: HomeService) { }
 

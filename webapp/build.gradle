@@ -32,7 +32,6 @@ bootWar.dependsOn = [':ngpage:build']
 bootWar {
 	archiveName "${projectName}.war"
 	from (project(':ngpage').file('dist/ngpage')) {
-		exclude "index.html", "favicon.ico"
 		into "resources"
 	}
 }
